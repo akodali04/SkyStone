@@ -40,7 +40,7 @@ public class BasicTeleOp extends LinearOpMode {
                 motorBR = motorBR.setPower(maxMotorPower)
             } else if () { //if joystick is going left indicating a turn {
                 motorFL.setPower(-maxMotorPower); //turns wheel
-                motorFR.setPower(-maxMotorPower); //turns the wheel
+                motorBL.setPower(-maxMotorPower); //turns the wheel
                 motorFR.setPower(maxMotorPower);
                 motorBR.setPower(maxMotorPower);
             }
