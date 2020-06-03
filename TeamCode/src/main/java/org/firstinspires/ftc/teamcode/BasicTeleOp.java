@@ -53,10 +53,10 @@ public class BasicTeleOp extends LinearOpMode {
             motorBL.setPower(v3);
             motorBR.setPower(v4);
             //end of trig version
-            }
-            wait(1);
-            idle();
         }
+        wait(1);
+        idle();
+    }
     }
 
 }
