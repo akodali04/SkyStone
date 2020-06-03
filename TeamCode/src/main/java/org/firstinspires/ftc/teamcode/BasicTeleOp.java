@@ -27,11 +27,12 @@ public class BasicTeleOp extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if() {//absolute value of left joystick displacement - threshold goes here
-                motorFL =
-                motorFR =
+                motorFL = motorFL.setPower(maxMotorPower);
+                motorFR = 
                 motorBL =
                 motorBR =
             }
+            wait(1);
             idle();
         }
     }
