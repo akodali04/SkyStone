@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import java.lang.*;
 
 @TeleOp (name = "TeleOp Mec Wheels", group = "Basic")
 public class BasicTeleOp extends LinearOpMode {
@@ -11,10 +12,16 @@ public class BasicTeleOp extends LinearOpMode {
     private DcMotor motorFR;
     private DcMotor motorBL;
     private DcMotor motorBR;
-
     private final int maxMotorPower = 70;
     private final int motorReduction = 100 - maxMotorPower;
-
+    //variables for trig drive
+    private double r;
+    private double robotAngle;
+    private double rightX;
+    private double v1;
+    private double v2;
+    private double v3;
+    private double v4;
     public BasicTeleOp() {
     }
 
@@ -33,16 +40,19 @@ public class BasicTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            if () {//absolute value of left joystick displacement - threshold goes here
-                motorFL = motorFL.setPower(maxMotorPower);
-                motorFR = motorFR.setPower(maxMotorPower);
-                motorBL = motorBL.setPower(maxMotorPower);
-                motorBR = motorBR.setPower(maxMotorPower)
-            } else if () { //if joystick is going left indicating a turn {
-                motorFL.setPower(-maxMotorPower); //turns wheel
-                motorFR.setPower(-maxMotorPower); //turns the wheel
-                motorFR.setPower(maxMotorPower);
-                motorBR.setPower(maxMotorPower);
+            // start of trig version for mecanum wheel drive
+            r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+            robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+            rightX = gamepad1.right_stick_x;
+            v1 = r * Math.cos(robotAngle) + rightX;
+            v2 = r * Math.sin(robotAngle) - rightX;
+            v3 = r * Math.sin(robotAngle) + rightX;
+            v4 = r * Math.cos(robotAngle) - rightX;
+            motorFL.setPower(v1);
+            motorFR.setPower(v2);
+            motorBL.setPower(v3);
+            motorBR.setPower(v4);
+            //end of trig version
             }
             wait(1);
             idle();
