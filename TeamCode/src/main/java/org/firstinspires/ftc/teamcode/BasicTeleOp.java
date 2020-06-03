@@ -16,13 +16,27 @@ public class BasicTeleOp extends LinearOpMode {
     private final int motorReduction = 100 - maxMotorPower;
     //variables for trig drive
     private double r;
-    private double robotAngle;
     private double rightX;
     private double v1;
     private double v2;
     private double v3;
     private double v4;
     public BasicTeleOp() {
+        r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);//r is the
+        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+        rightX = gamepad1.right_stick_x;
+        v1 = r * Math.cos(robotAngle) + rightX;
+        v2 = r * Math.sin(robotAngle) - rightX;
+        v3 = r * Math.sin(robotAngle) + rightX;
+        v4 = r * Math.cos(robotAngle) - rightX;
+        motorFL.setPower(v1);
+        motorFR.setPower(v2);
+        motorBL.setPower(v3);
+        motorBR.setPower(v4);
+    }
+
+    public void trigMecRun() {
+
     }
 
     @Override
@@ -38,24 +52,13 @@ public class BasicTeleOp extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-
         while (opModeIsActive()) {
             // start of trig version for mecanum wheel drive
-            r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-            robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-            rightX = gamepad1.right_stick_x;
-            v1 = r * Math.cos(robotAngle) + rightX;
-            v2 = r * Math.sin(robotAngle) - rightX;
-            v3 = r * Math.sin(robotAngle) + rightX;
-            v4 = r * Math.cos(robotAngle) - rightX;
-            motorFL.setPower(v1);
-            motorFR.setPower(v2);
-            motorBL.setPower(v3);
-            motorBR.setPower(v4);
+            trigMecRun();
             //end of trig version
         }
-        wait(1);
-        idle();
+//        wait(1);
+//        idle();
     }
     }
 
